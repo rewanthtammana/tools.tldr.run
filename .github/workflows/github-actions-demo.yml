@@ -14,7 +14,7 @@ jobs:
           cd tools.tldr.run/tools
           echo "Total entries = " $(cat *.json | jq '.name' | sort | wc -l)
           echo "Unique entries = " $(cat *.json | jq '.name' | sort | uniq -i | wc -l)
-          if [ $(cat *.json | jq '.name' | sort | uniq -i | wc -l) -ne $(cat *.json | jq '.name' | sort | wc -l) ]; echo "Duplicate entry"; then exit 1; fi
+          if [ $(cat *.json | jq '.name' | sort | uniq -i | wc -l) -ne $(cat *.json | jq '.name' | sort | wc -l) ]; echo "Duplicate entry"; echo $(cat *.json | jq '.name' | sort  | uniq -i -c -d) then exit 1; fi
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
