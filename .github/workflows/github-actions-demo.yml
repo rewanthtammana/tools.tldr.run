@@ -12,7 +12,9 @@ jobs:
           sudo apt-get update && sudo apt-get -y install jq git
           git clone https://github.com/${{ github.repository }} -b `echo ${{ github.ref }} | cut -d'/' -f3`
           cd tools.tldr.run/tools
-          if [ $(cat *.json | jq '.name' | uniq -i | wc -l) -ne $(cat *.json | jq '.name' | wc -l) ]; echo "Duplicate entry"; then exit 1; fi
+          echo "Total entries = " $(cat *.json | jq '.name' | sort | wc -l)
+          echo "Unique entries = " $(cat *.json | jq '.name' | sort | uniq -i | wc -l)
+          if [ $(cat *.json | jq '.name' | sort | uniq -i | wc -l) -ne $(cat *.json | jq '.name' | sort | wc -l) ]; echo "Duplicate entry"; then exit 1; fi
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
