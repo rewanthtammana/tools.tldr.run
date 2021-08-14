@@ -14,7 +14,6 @@
         "encryption",
         "blue-team",
         "honeypot",
-        "canary-token",
         "end-to-end-encryption"
     ],
     "operating_systems": [
