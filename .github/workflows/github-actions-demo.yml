@@ -4,19 +4,15 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-         sudo apt-get update && sudo apt-get -y install jq git
-#         git clone https://github.com/tldrrun/tools.tldr.run
-#         cd tools.tldr.run/tools
-#         cat *.json | jq '.name'
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - run: echo "Wow ${{ github.base_ref }} - ${{ github.head_ref }}"
       - run: |
+          sudo apt-get update && sudo apt-get -y install jq git
           git clone https://github.com/${{ github.repository }} -b `echo ${{ github.ref }} | cut -d'/' -f3`
           cd tools.tldr.run/tools
-          if [ $(cat *.json | jq '.name' | uniq | wc -l) -ne $(cat *.json | jq '.name' | wc -l) ]; echo "Duplicate entry"; then exit; fi
+          if [ $(cat *.json | jq '.name' | uniq | wc -l) -ne $(cat *.json | jq '.name' | wc -l) ]; echo "Duplicate entry"; then exit 1; fi
 #     - run: |
 #         git clone https://github.com/${{ github.repository }}
 #         cd tools.tldr.run
